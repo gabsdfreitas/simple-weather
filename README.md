@@ -1,4 +1,4 @@
-#Simple Weather
+# Simple Weather
 A lightweight, cross-platform desktop weather application built with SvelteKit, Tauri, and TypeScript. Simple Weather features dynamic sky visuals, local forecast displays, and comprehensive native packaging support for both Linux and Windows.
 Features
 
