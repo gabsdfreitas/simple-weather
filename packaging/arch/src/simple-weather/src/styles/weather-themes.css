@@ -1,0 +1,131 @@
+/* src/styles/weather-themes.css */
+
+:root {
+  --glass-bg: rgba(195, 200, 205, 0.60);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-blur: 12px;
+  --glass-shadow: rgba(0, 0, 0, 0.2);
+  --glass-highlight: rgba(255, 255, 255, 0.55);
+  
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.95);
+  --text-shadow-glass: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.sky-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  transition: background 2.5s ease, filter 2.5s ease;
+  background-size: cover;
+  overflow: hidden;
+}
+
+/* --- 16 Weather States --- */
+
+[data-weather="clear-day"] {
+  background: linear-gradient(185deg, #1a6fc4 0%, #3a9bd5 38%, #87ceeb 72%, #b8e4f7 100%);
+  --glass-shadow: rgba(26, 111, 196, 0.25);
+}
+
+[data-weather="partly-cloudy"] {
+  background: linear-gradient(185deg, #2874a6 0%, #5dade2 42%, #a9cce3 78%, #d6eaf8 100%);
+  --text-shadow-glass: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+
+[data-weather="cloudy"] {
+  background: linear-gradient(185deg, #5d6d7e 0%, #7f8c8d 38%, #aab7b8 72%, #c8d0d0 100%);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --text-shadow-glass: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+[data-weather="overcast"] {
+  background: linear-gradient(185deg, #424949 0%, #5d6d7e 38%, #85929e 72%, #a9b3b8 100%);
+  --glass-bg: rgba(40, 43, 46, 0.60);
+  --glass-border: rgba(255, 255, 255, 0.25);
+}
+
+[data-weather="fog"] {
+  background: linear-gradient(185deg, #808b96 0%, #a2aab3 35%, #c5cdd4 65%, #dde3e8 100%);
+  --glass-bg: rgba(220, 225, 230, 0.80);
+  --glass-blur: 24px;
+  --text-primary: #1a2a3a;
+  --text-secondary: rgba(26, 42, 58, 0.9);
+  --text-shadow-glass: none;
+}
+
+[data-weather="snow"] {
+  background: linear-gradient(185deg, #b8c8d8 0%, #cdd8e3 38%, #dde5ed 68%, #edf0f4 100%);
+  --glass-bg: rgba(225, 230, 235, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-shadow: rgba(184, 200, 216, 0.45);
+  --text-primary: #1a2a3a;
+  --text-secondary: rgba(26, 42, 58, 0.9);
+  --text-shadow-glass: none;
+}
+
+[data-weather="blizzard"] {
+  background: linear-gradient(185deg, #8a9aaa 0%, #9caab8 38%, #b0bec8 68%, #c4cfd8 100%);
+  --glass-bg: rgba(225, 230, 235, 0.80);
+  --glass-blur: 24px;
+  --text-primary: #121d26;
+  --text-secondary: rgba(18, 29, 38, 0.9);
+  --text-shadow-glass: none;
+}
+
+[data-weather="dust"] {
+  background: linear-gradient(185deg, #8b6914 0%, #b8860b 32%, #d4a843 62%, #e8c878 100%);
+  --glass-bg: rgba(60, 40, 10, 0.70);
+  --glass-border: rgba(255, 230, 180, 0.35);
+}
+
+[data-weather="sunrise"] {
+  background: linear-gradient(185deg, #1a1a3e 0%, #c06030 28%, #e8804a 52%, #f4a460 72%, #ffd580 100%);
+  --glass-bg: rgba(255, 200, 150, 0.60);
+  --glass-border: rgba(255, 230, 200, 0.45);
+  --glass-shadow: rgba(200, 80, 40, 0.3);
+}
+
+[data-weather="sunset"] {
+  background: linear-gradient(185deg, #0d1b3e 0%, #8b2040 22%, #d44a20 48%, #e87840 68%, #f0b060 88%, #fad080 100%);
+  --glass-bg: rgba(40, 10, 20, 0.70);
+  --glass-border: rgba(255, 150, 150, 0.35);
+  --glass-shadow: rgba(80, 20, 30, 0.5);
+}
+
+[data-weather="heatwave"] {
+  background: linear-gradient(185deg, #b34700 0%, #d4691e 32%, #e8962a 62%, #f5c842 100%);
+  --glass-bg: rgba(255, 100, 0, 0.60);
+  --glass-border: rgba(255, 200, 100, 0.45);
+}
+
+[data-weather="clear-night"] {
+  background: linear-gradient(185deg, #020818 0%, #0a1628 35%, #0d2240 68%, #0a2a50 100%);
+  --glass-bg: rgba(45, 50, 60, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: rgba(0, 0, 0, 0.55);
+}
+
+[data-weather="drizzle"] {
+  background: linear-gradient(185deg, #2e4057 0%, #4a6274 38%, #6b8794 72%, #8fa8b3 100%);
+  --glass-bg: rgba(50, 53, 57, 0.65);
+}
+
+[data-weather="rain"] {
+  background: linear-gradient(185deg, #1a2a3a 0%, #243447 38%, #2e4a62 68%, #3a6080 100%);
+  --glass-bg: rgba(60, 65, 70, 0.80);
+  --glass-border: rgba(255, 255, 255, 0.25);
+}
+
+[data-weather="heavy-rain"] {
+  background: linear-gradient(185deg, #0d1b2a 0%, #162233 38%, #1a2d40 68%, #1e3a50 100%);
+  --glass-bg: rgba(40, 43, 46, 0.85);
+  --glass-blur: 20px;
+}
+
+[data-weather="thunderstorm"] {
+  background: linear-gradient(185deg, #0a0e1a 0%, #14213d 28%, #1a2850 52%, #16213e 100%);
+  --glass-bg: rgba(40, 43, 46, 0.85);
+  --glass-border: rgba(200, 220, 255, 0.25);
+  --glass-shadow: rgba(0, 0, 0, 0.7);
+}

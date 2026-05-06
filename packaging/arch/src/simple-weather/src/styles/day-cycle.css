@@ -1,0 +1,199 @@
+/* src/styles/day-cycle.css */
+
+:root {
+  --sun-x: 50vw;
+  --sun-y: 100vh;
+  --moon-x: 50vw;
+  --moon-y: 100vh;
+  --star-opacity: 0;
+  --moon-opacity: 1;
+  --cycle-filter: none;
+}
+
+/* FIXED: Fast 3-second transitions so new cities and time-jumps apply instantly */
+.sky-bg {
+  transition: filter 3s ease, background 3s ease, opacity 3s ease;
+}
+
+.sky-bg::before, .sky-bg::after {
+  transition: background 3s ease, opacity 3s ease;
+}
+
+.sky-bg.debug-fast, .sky-bg.debug-fast::before, .sky-bg.debug-fast::after, .sky-bg.debug-fast * {
+  transition-duration: 0.3s !important;
+}
+
+.celestial-body {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+  /* Position moves over 60s for smooth real-time tracking, but colors/opacity fade in 3s */
+  transition: left 60s linear, top 60s linear, opacity 3s ease, box-shadow 3s ease, background 3s ease;
+  will-change: left, top;
+}
+
+/* UPGRADED: 3D Glossy Frutiger Aero Sun */
+.celestial-body.sun {
+  width: 72px;
+  height: 72px;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #fffde7 20%, #ffd54f 60%, #ffb300 100%);
+  left: var(--sun-x);
+  top: var(--sun-y);
+  box-shadow: 
+    inset -4px -4px 10px rgba(255, 140, 0, 0.5), /* 3D volume */
+    inset 4px 4px 12px rgba(255, 255, 255, 0.9), /* Glass highlight */
+    0 0 40px 15px rgba(255, 213, 79, 0.6), /* Inner glow */
+    0 0 120px 40px rgba(255, 180, 50, 0.4); /* Atmospheric scatter */
+}
+
+/* UPGRADED: 3D Glossy Frutiger Aero Moon */
+.celestial-body.moon {
+  width: 48px;
+  height: 48px;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f0f4f8 40%, #c0c8d0 100%);
+  left: var(--moon-x);
+  top: var(--moon-y);
+  box-shadow: 
+    inset -4px -4px 10px rgba(100, 120, 150, 0.5),
+    inset 4px 4px 12px rgba(255, 255, 255, 0.9),
+    0 0 30px 10px rgba(200, 220, 255, 0.3);
+  opacity: var(--moon-opacity);
+}
+
+/* --- Global Cloud Silhouettes at Night --- */
+/* FIXED: Soft, semi-transparent navy clouds instead of harsh pitch black */
+.sky-bg[data-time="night"] .cloud { filter: brightness(0.5) saturate(0.6) opacity(0.85) !important; }
+.sky-bg[data-time="pre-dawn"] .cloud { filter: brightness(0.6) saturate(0.8) opacity(0.9) !important; }
+.sky-bg[data-time="dusk"] .cloud { filter: brightness(0.55) saturate(0.7) opacity(0.9) !important; }
+.sky-bg[data-time="sunset"] .cloud { filter: brightness(0.7) sepia(0.4) hue-rotate(-15deg) !important; }
+
+/* --- The 10 Time Phases --- */
+
+.sky-bg[data-time="night"] {
+  filter: var(--cycle-filter, saturate(0.6) hue-rotate(10deg));
+  --glass-bg: rgba(15, 25, 55, 0.45);
+  --glass-blur: 22px;
+  --glass-border: rgba(180, 200, 255, 0.15);
+}
+.sky-bg[data-time="night"]::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: rgba(5, 10, 25, 0.85); /* Deep rich navy overlay */
+}
+.sky-bg[data-time="night"] .celestial-body.sun { opacity: 0; }
+
+.sky-bg[data-time="pre-dawn"] {
+  filter: var(--cycle-filter, saturate(0.8));
+  --glass-bg: rgba(20, 20, 50, 0.48);
+  --glass-blur: 20px;
+  --glass-border: rgba(180, 160, 220, 0.18);
+}
+.sky-bg[data-time="pre-dawn"]::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: rgba(10, 15, 35, 0.75);
+}
+.sky-bg[data-time="pre-dawn"] .celestial-body.sun { opacity: 0.1; }
+
+.sky-bg[data-time="sunrise"] {
+  filter: var(--cycle-filter, hue-rotate(10deg) brightness(0.85) saturate(1.1));
+  --glass-bg: rgba(40, 25, 15, 0.42);
+  --glass-blur: 18px;
+  --glass-border: rgba(255, 200, 120, 0.22);
+}
+.sky-bg[data-time="sunrise"]::after {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at var(--sun-x) 100%, rgba(255,160,60,0.45), transparent 55%);
+}
+.sky-bg[data-time="sunrise"]::before { background: transparent; } 
+.sky-bg[data-time="sunrise"] .celestial-body.sun {
+  box-shadow: 0 0 100px 40px rgba(255, 160, 60, 0.6);
+}
+
+.sky-bg[data-time="morning"] {
+  filter: var(--cycle-filter, brightness(1.05) saturate(1.05) hue-rotate(2deg));
+  --glass-bg: rgba(255, 255, 255, 0.38);
+  --glass-blur: 16px;
+  --glass-border: rgba(255, 255, 255, 0.28);
+}
+.sky-bg[data-time="morning"]::after {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at var(--sun-x) 100%, rgba(180,230,255,0.18), transparent 50%);
+}
+.sky-bg[data-time="morning"]::before { background: transparent; }
+
+.sky-bg[data-time="noon"] {
+  filter: var(--cycle-filter, none);
+}
+.sky-bg[data-time="noon"]::after, .sky-bg[data-time="noon"]::before { background: transparent; }
+
+.sky-bg[data-time="afternoon"] {
+  filter: var(--cycle-filter, hue-rotate(8deg) brightness(0.97) saturate(0.95));
+  --glass-bg: rgba(255, 248, 235, 0.4);
+  --glass-blur: 16px;
+  --glass-border: rgba(255, 220, 160, 0.22);
+}
+.sky-bg[data-time="afternoon"]::after {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at var(--sun-x) 100%, rgba(255,200,120,0.22), transparent 55%);
+}
+.sky-bg[data-time="afternoon"]::before { background: transparent; }
+.sky-bg[data-time="afternoon"] .celestial-body.sun {
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #ffeba0 25%, #ffb300 65%, #f57c00 100%);
+  box-shadow: 
+    inset -4px -4px 10px rgba(255, 100, 0, 0.5), inset 4px 4px 12px rgba(255, 255, 255, 0.9),
+    0 0 60px 20px rgba(255, 180, 50, 0.5), 0 0 100px 40px rgba(255, 150, 50, 0.3);
+}
+
+.sky-bg[data-time="late-afternoon"] {
+  filter: var(--cycle-filter, hue-rotate(-5deg) brightness(0.9) saturate(1.08));
+  --glass-bg: rgba(35, 15, 10, 0.45);
+  --glass-blur: 20px;
+  --glass-border: rgba(255, 160, 80, 0.22);
+}
+.sky-bg[data-time="late-afternoon"]::after {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at var(--sun-x) 100%, rgba(220,100,30,0.45), transparent 52%);
+}
+.sky-bg[data-time="late-afternoon"]::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 0%, rgba(40,20,80,0.35), transparent 55%);
+}
+.sky-bg[data-time="late-afternoon"] .celestial-body.sun {
+  background: radial-gradient(circle at 35% 35%, #ffeedd 0%, #ffb000 30%, #ef6000 75%, #cc3300 100%);
+  box-shadow: 
+    inset -4px -4px 10px rgba(200, 50, 0, 0.6), inset 4px 4px 12px rgba(255, 255, 255, 0.9),
+    0 0 80px 30px rgba(230, 90, 20, 0.6);
+}
+
+.sky-bg[data-time="sunset"] {
+  filter: var(--cycle-filter, hue-rotate(-12deg) brightness(0.82) saturate(1.15));
+  --glass-bg: rgba(30, 10, 5, 0.48);
+  --glass-blur: 22px;
+  --glass-border: rgba(255, 140, 60, 0.22);
+}
+.sky-bg[data-time="sunset"]::after {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at var(--sun-x) 100%, rgba(220,60,20,0.55), transparent 60%);
+}
+.sky-bg[data-time="sunset"]::before { background: transparent; }
+.sky-bg[data-time="sunset"] .celestial-body.sun {
+  background: radial-gradient(circle at 35% 35%, #ffe0cc 0%, #ff7700 35%, #da3000 75%, #a01000 100%);
+  box-shadow: 
+    inset -4px -4px 10px rgba(150, 20, 0, 0.6), inset 4px 4px 12px rgba(255, 255, 255, 0.9),
+    0 0 120px 50px rgba(240, 70, 10, 0.7);
+}
+
+.sky-bg[data-time="dusk"] {
+  filter: var(--cycle-filter, saturate(0.8));
+  --glass-bg: rgba(10, 15, 40, 0.5);
+  --glass-blur: 22px;
+  --glass-border: rgba(160, 140, 200, 0.18);
+}
+.sky-bg[data-time="dusk"]::after {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at var(--sun-x) 100%, rgba(90,40,70,0.4), transparent 55%);
+}
+.sky-bg[data-time="dusk"]::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: rgba(15, 15, 30, 0.75); 
+}
+.sky-bg[data-time="dusk"] .celestial-body.sun { opacity: 0; }

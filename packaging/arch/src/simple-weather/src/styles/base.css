@@ -1,0 +1,87 @@
+/* src/styles/base.css */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-family: 'Outfit', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #ffffff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  background: #000;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--sky-top), var(--sky-bottom));
+  background-size: cover;
+  background-attachment: fixed;
+  transition: background 2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  padding: 2rem 0;
+}
+
+/* Global Interactive Animation System */
+.app-interactive {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform-origin: center bottom;
+}
+
+.app-interactive:hover, .app-interactive:focus-visible {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  outline: none;
+}
+
+/* Triggered by the Svelte bounce action */
+.app-interactive.is-animating {
+  animation: squashStretchClick 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes squashStretchClick {
+  0% { transform: scale(1) translateY(-2px); }
+  30% { transform: scale(1.1, 0.9) translateY(4px); filter: brightness(1.5); box-shadow: 0 0 25px rgba(255,255,255,0.4); }
+  70% { transform: scale(0.97, 1.03) translateY(-4px); }
+  100% { transform: scale(1) translateY(0); filter: brightness(1); }
+}
+
+/* Glass Shimmer Loading Effect */
+@keyframes glassShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, 
+    var(--glass-bg) 25%, 
+    rgba(255,255,255,0.2) 50%, 
+    var(--glass-bg) 75%
+  );
+  background-size: 200% 100%;
+  animation: glassShimmer 2s infinite linear;
+  border-radius: 24px;
+  border: 1px solid var(--glass-border);
+}

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Simple Weather
+Comment=Lightweight weather app with dynamic sky backgrounds
+Exec=simple-weather
+Icon=simple-weather
+Type=Application
+Categories=Utility;Network;Weather;
+Keywords=weather;forecast;temperature;sky;
+StartupNotify=true
+StartupWMClass=com.simpleWeather.app

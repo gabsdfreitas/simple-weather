@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Simple Weather
+Comment=A Simple Weather App
+Exec=simple-weather
+Icon=com.simpleWeather.app
+Terminal=false
+Type=Application
+Categories=Utility;Science;
+StartupNotify=true
+StartupWMClass=com.simpleWeather.app
