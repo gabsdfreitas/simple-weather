@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.simpleWeather.app</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Simple Weather</name>
+  <summary>A simple and beautiful weather application</summary>
+  <description>
+    <p>
+      Simple Weather is a lightweight and beautiful weather application for Linux.
+      It provides real-time weather information with a modern, intuitive interface.
+    </p>
+  </description>
+  <url type="homepage">https://github.com/yourusername/simple-weather</url>
+  <launchable type="desktop-id">com.simpleWeather.app.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://via.placeholder.com/1200x675</image>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.0" />
+  <releases>
+    <release version="0.1.0" date="2026-04-15">
+      <description>
+        <p>Initial release of Simple Weather</p>
+      </description>
+    </release>
+  </releases>
+</component>

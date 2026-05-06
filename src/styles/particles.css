@@ -1,0 +1,206 @@
+/* src/styles/particles.css */
+
+.particle-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* --- Procedural Fluffy Clouds --- */
+.cloud {
+  background: rgba(255, 255, 255, 1);
+  border-radius: 50px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.05);
+  animation: cloud-drift linear infinite alternate;
+  will-change: transform;
+  /* Crucial: Smooth 3s transition so clouds don't snap colors instantly during time shifts */
+  transition: filter 3s ease, background 3s ease, opacity 3s ease;
+}
+
+.cloud-bubble {
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+  box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.05), inset 0 3px 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Procedural geometry for cloud bubbles */
+.cb1 {
+  width: 50%;
+  height: 120%;
+  top: -60%;
+  left: 15%;
+}
+
+.cb2 {
+  width: 65%;
+  height: 160%;
+  top: -90%;
+  left: 40%;
+}
+
+.cb3 {
+  width: 35%;
+  height: 90%;
+  top: -45%;
+  right: 5%;
+}
+
+/* Adaptive cloud tints */
+.light-cloud {
+  background: #ffffff;
+}
+
+.dark-cloud {
+  background: rgba(180, 190, 200, 1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18), inset 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Fog --- */
+.fog-band {
+  background: rgba(255, 255, 255, 0.35);
+  filter: blur(8px);
+  animation: fog-drift linear infinite alternate;
+}
+
+/* --- GPU Particles --- */
+.particle {
+  position: absolute;
+  will-change: transform, opacity;
+  z-index: 2;
+}
+
+.star {
+  background: white;
+  border-radius: 50%;
+  animation: twinkle infinite alternate ease-in-out;
+}
+
+.rain-drop {
+  background: rgba(180, 210, 230, 0.5);
+  transform: rotate(12deg);
+  animation: fall-medium linear infinite;
+}
+
+.snow-flake {
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 50%;
+  animation: snow-fall linear infinite;
+}
+
+.dust-mote {
+  background: rgba(200, 160, 80, 0.6);
+  border-radius: 1px;
+  animation: drift linear infinite;
+}
+
+.thunder-flash {
+  position: absolute;
+  inset: 0;
+  animation: lightning-flash 8s infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* --- Keyframes --- */
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes cloud-drift {
+  0% {
+    transform: translate3d(-20px, 0px, 0);
+  }
+  100% {
+    transform: translate3d(20px, 5px, 0);
+  }
+}
+
+@keyframes fog-drift {
+  0% {
+    transform: translate3d(-10vw, 0px, 0);
+  }
+  100% {
+    transform: translate3d(10vw, 0px, 0);
+  }
+}
+
+@keyframes fall-medium {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(12deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-10vw, 110vh, 0) rotate(12deg);
+    opacity: 0;
+  }
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translate3d(15px, 20vh, 0) rotate(45deg);
+  }
+  50% {
+    transform: translate3d(-15px, 50vh, 0) rotate(90deg);
+  }
+  80% {
+    opacity: 1;
+    transform: translate3d(10px, 80vh, 0) rotate(135deg);
+  }
+  100% {
+    transform: translate3d(-10px, 110vh, 0) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(-10vw, 0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(110vw, 20px, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes lightning-flash {
+  0%, 2%, 4%, 6%, 10%, 100% {
+    background-color: transparent;
+  }
+  2%, 6% {
+    background-color: rgba(230, 240, 255, 0.25);
+  }
+}
+
+/* Reduced Motion Fallback */
+@media (prefers-reduced-motion: reduce) {
+  .particle, .thunder-flash, .cloud, .fog-band {
+    display: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

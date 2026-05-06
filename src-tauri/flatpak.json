@@ -1,0 +1,50 @@
+{
+  "app-id": "com.simpleWeather.app",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "50",
+  "sdk": "org.gnome.Sdk",
+  "command": "simple-weather",
+  "finish-args": [
+    "--share=network",
+    "--share=ipc",
+    "--socket=x11",
+    "--socket=wayland",
+    "--device=dri",
+    "--talk-name=org.freedesktop.impl.portal.*",
+    "--env=PATH=/app/bin:/usr/bin"
+  ],
+  "modules": [
+    {
+      "name": "simple-weather",
+      "buildsystem": "simple",
+      "build-commands": [
+        "install -Dm755 simple-weather /app/bin/simple-weather",
+        "install -Dm644 icon.svg /app/share/icons/hicolor/scalable/apps/com.simpleWeather.app.svg",
+        "install -Dm644 com.simpleWeather.app.desktop /app/share/applications/com.simpleWeather.app.desktop",
+        "install -Dm644 com.simpleWeather.app.appdata.xml /app/share/metainfo/com.simpleWeather.app.appdata.xml"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "path": "target/release/simple-weather",
+          "dest-filename": "simple-weather"
+        },
+        {
+          "type": "file",
+          "path": "../assets/icon.svg",
+          "dest-filename": "icon.svg"
+        },
+        {
+          "type": "file",
+          "path": "../com.simpleWeather.app.desktop",
+          "dest-filename": "com.simpleWeather.app.desktop"
+        },
+        {
+          "type": "file",
+          "path": "../com.simpleWeather.app.appdata.xml",
+          "dest-filename": "com.simpleWeather.app.appdata.xml"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+pkgname=simple-weather
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Lightweight weather app with dynamic sky backgrounds"
+arch=('x86_64')
+url="https://github.com/youruser/simple-weather"
+license=('MIT')
+depends=(
+    'cairo'
+    'desktop-file-utils'
+    'gdk-pixbuf2'
+    'glib2'
+    'gtk3'
+    'hicolor-icon-theme'
+    'libsoup3'
+    'pango'
+    'webkit2gtk-4.1'
+)
+makedepends=(
+    'nodejs'
+    'npm'
+    'rust'
+    'cargo'
+    'librsvg'
+)
+source=("simple-weather-$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    cd "$srcdir/simple-weather"
+    npm ci
+    NO_STRIP=true npm run tauri build -- --no-bundle
+}
+
+package() {
+    cd "$srcdir/simple-weather"
+
+    install -Dm755 "src-tauri/target/release/simple-weather" \
+        "$pkgdir/usr/bin/simple-weather"
+
+    install -Dm644 "src-tauri/icons/32x32.png" \
+        "$pkgdir/usr/share/icons/hicolor/32x32/apps/simple-weather.png"
+    install -Dm644 "src-tauri/icons/128x128.png" \
+        "$pkgdir/usr/share/icons/hicolor/128x128/apps/simple-weather.png"
+    install -Dm644 "src-tauri/icons/256x256.png" \
+        "$pkgdir/usr/share/icons/hicolor/256x256/apps/simple-weather.png"
+    install -Dm644 "assets/icon.svg" \
+        "$pkgdir/usr/share/icons/hicolor/scalable/apps/simple-weather.svg"
+
+    install -Dm644 /dev/stdin \
+        "$pkgdir/usr/share/applications/simple-weather.desktop" <<EOF
+[Desktop Entry]
+Name=Simple Weather
+Comment=Lightweight weather app with dynamic sky backgrounds
+Exec=simple-weather
+Icon=simple-weather
+Type=Application
+Categories=Utility;Network;Weather;
+Keywords=weather;forecast;temperature;sky;
+StartupNotify=true
+StartupWMClass=com.simpleWeather.app
+EOF
+}

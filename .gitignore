@@ -1,0 +1,31 @@
+# Node & Svelte
+node_modules/
+build/
+.svelte-kit/
+npm-debug.log*
+
+# Tauri & Rust
+src-tauri/target/
+src-tauri/gen/
+
+# Flatpak Builder Caches
+.flatpak-builder/
+build-dir/
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# OS Junk Files
+.DS_Store
+Thumbs.db
+
+# Compiled Binaries & Installers (Do not push these to source control!)
+*.flatpak
+*.deb
+*.rpm
+*.pkg.tar.zst
+*.AppImage
+*.msi
+*.exe
