@@ -20,13 +20,13 @@ Features
 
 Ensure the following system dependencies are installed before building:
 
-Global Requirements
+## Global Requirements
 
     Node.js (v18+) & npm
 
     Rust toolchain (stable) & Cargo
 
-Linux Build Requirements
+## Linux Build Requirements
 
     patchelf (Required for Tauri bundling)
 
@@ -39,13 +39,13 @@ Linux Build Requirements
 
     flatpak install flathub org.gnome.Sdk//50 org.gnome.Platform//50
 
-Windows Build Requirements
+## Windows Build Requirements
 
     Windows 10/11 (x86_64)
 
     Visual Studio Build Tools (with MSVC and Windows SDK)
 
-Building from Source
+## Building from Source
 
 First, install the Node dependencies and build the SvelteKit frontend:
 Bash
@@ -53,7 +53,7 @@ Bash
 npm ci
 npm run build
 
-Linux Packaging
+## Linux Packaging
 
 The repository includes dedicated shell scripts to streamline the Linux packaging process. You can run these directly or via their corresponding npm aliases (e.g., npm run build:deb).
 Bash
@@ -64,7 +64,7 @@ Bash
 ./build-pacman.sh     # Build Arch Linux package
 ./build-flatpak.sh    # Build Flatpak bundle (.flatpak)
 
-# Or, generate all Linux formats sequentially:
+### Or, generate all Linux formats sequentially:
 ./build-all.sh
 
 Running the Flatpak Locally:
@@ -74,15 +74,15 @@ Bash
 flatpak install --user -y build-flatpak/simple-weather-0.1.0.flatpak
 flatpak run com.simpleWeather.app
 
-(Note: If you encounter a libwebkit2gtk-4.1.so.0 error, ensure the GNOME 50 Platform is installed via Flathub as specified in the prerequisites).
-Windows Packaging
+# (Note: If you encounter a libwebkit2gtk-4.1.so.0 error, ensure the GNOME 50 Platform is installed via Flathub as specified in the prerequisites).
 
-Windows builds utilize a dedicated batch script that targets MSI generation via src-tauri/tauri.windows.conf.json.
-DOS
+## Windows Packaging
+
+Windows builds utilize a dedicated batch script that targets MSI generation via src-tauri/tauri.windows.conf.json.DOS
 
 build-windows.bat
 
-Package Outputs
+## Package Outputs
 
 Successfully compiled installers and binaries are deposited into the following directories:
 
