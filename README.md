@@ -1,167 +1,98 @@
-# Simple Weather
+#Simple Weather
+A lightweight, cross-platform desktop weather application built with SvelteKit, Tauri, and TypeScript. Simple Weather features dynamic sky visuals, local forecast displays, and comprehensive native packaging support for both Linux and Windows.
+Features
 
-Simple Weather is a lightweight desktop weather app built with SvelteKit, Tauri, and TypeScript. It provides dynamic sky visuals, local weather forecast display, and native Linux packaging support.
+    Cross-Platform: Native desktop builds for Linux and Windows.
 
-## Features
+    Dynamic UI: SvelteKit frontend with reactive weather themes and animations.
 
-- Tauri-based desktop app for Linux
-- SvelteKit front-end with dynamic weather themes
-- Local weather lookup via built-in API route
-- Builds to multiple Linux package formats
+    Local API Integration: Built-in weather routing and data lookup.
 
-## Requirements
+    Extensive Packaging: Automated build scripts for Flatpak, AppImage, DEB, RPM, Pacman, and MSI.
 
-### System requirements
+## Screenshot:
 
-- Linux x86_64
-- Node.js 18+ / npm
-- Rust toolchain (stable)
-- `cargo`
-- `makepkg` (for Arch package build)
-- `appimagetool` (optional fallback for AppImage)
-- `patchelf` (used by Tauri bundling)
+<img width="1457" height="871" alt="image" src="https://github.com/user-attachments/assets/cf436bdd-bf15-4b87-b831-ac44a3dc35a1" />
 
-### Dev dependencies
 
-- `@tauri-apps/cli`
-- `@sveltejs/kit`
-- `vite`
-- `typescript`
+Prerequisites
 
-## Build scripts
+Ensure the following system dependencies are installed before building:
 
-This repo includes helper scripts for packaging the app.
+Global Requirements
 
-- `./build-deb.sh` — build a Debian package (`.deb`)
-- `./build-rpm.sh` — build an RPM package (`.rpm`)
-- `./build-appimage.sh` — build an AppImage package
-- `./build-pacman.sh` — build a Pacman package for Arch Linux
-- `./build-all.sh` — run all package builds sequentially
+    Node.js (v18+) & npm
 
-## How to build
+    Rust toolchain (stable) & Cargo
 
-From the repo root:
+Linux Build Requirements
 
-```bash
+    patchelf (Required for Tauri bundling)
+
+    makepkg (For Arch Linux package builds)
+
+    appimagetool (Optional fallback for AppImage generation)
+
+    Flatpak: flatpak, flatpak-builder, and the GNOME 50 SDK/Platform.
+    Bash
+
+    flatpak install flathub org.gnome.Sdk//50 org.gnome.Platform//50
+
+Windows Build Requirements
+
+    Windows 10/11 (x86_64)
+
+    Visual Studio Build Tools (with MSVC and Windows SDK)
+
+Building from Source
+
+First, install the Node dependencies and build the SvelteKit frontend:
+Bash
+
 npm ci
 npm run build
-```
 
-Then use one of the package scripts:
+Linux Packaging
 
-```bash
-./build-deb.sh
-./build-rpm.sh
-./build-appimage.sh
-./build-pacman.sh
-```
+The repository includes dedicated shell scripts to streamline the Linux packaging process. You can run these directly or via their corresponding npm aliases (e.g., npm run build:deb).
+Bash
 
-Or run them all:
+./build-deb.sh        # Build Debian package (.deb)
+./build-rpm.sh        # Build RPM package (.rpm)
+./build-appimage.sh   # Build AppImage package
+./build-pacman.sh     # Build Arch Linux package
+./build-flatpak.sh    # Build Flatpak bundle (.flatpak)
 
-```bash
+# Or, generate all Linux formats sequentially:
 ./build-all.sh
-```
 
-### npm shortcuts
+Running the Flatpak Locally:
+Once built, you can install and run the Flatpak bundle using:
+Bash
 
-The following npm scripts are available in `package.json`:
-
-- `npm run build:deb`
-- `npm run build:rpm`
-- `npm run build:appimage`
-- `npm run build:pacman`
-- `npm run build:flatpak`
-- `npm run build:all`
-
-## Flatpak build
-
-The Flatpak workflow uses `flatpak-builder` and a local manifest at `src-tauri/flatpak.json`.
-
-Requirements for Flatpak packaging:
-
-- `flatpak`
-- `flatpak-builder`
-- `org.gnome.Sdk//50`
-- `org.gnome.Platform//50`
-
-Install the Flatpak SDK/runtime if missing:
-
-```bash
-flatpak install flathub org.gnome.Sdk//50
-flatpak install flathub org.gnome.Platform//50
-```
-
-Build the Flatpak bundle from the repo root:
-
-```bash
-./build-flatpak.sh
-```
-
-Install the built bundle locally:
-
-```bash
 flatpak install --user -y build-flatpak/simple-weather-0.1.0.flatpak
-```
-
-Run the installed Flatpak app:
-
-```bash
 flatpak run com.simpleWeather.app
-```
 
-If a runtime error occurs for `libwebkit2gtk-4.1.so.0`, reinstall the bundle after installing the GNOME runtime:
+(Note: If you encounter a libwebkit2gtk-4.1.so.0 error, ensure the GNOME 50 Platform is installed via Flathub as specified in the prerequisites).
+Windows Packaging
 
-```bash
-flatpak install flathub org.gnome.Platform//50
-flatpak install --user -y build-flatpak/simple-weather-0.1.0.flatpak
-```
+Windows builds utilize a dedicated batch script that targets MSI generation via src-tauri/tauri.windows.conf.json.
+DOS
 
-This produces:
-
-- `build-flatpak/simple-weather-0.1.0.flatpak`
-
-## Windows build
-
-This repo now uses a Windows batch script for building on Windows.
-On Windows, Tauri will also load `src-tauri/tauri.windows.conf.json` so the MSI bundle target is enabled.
-
-Requirements for building on Windows:
-
-- Windows 10/11 x86_64
-- Node.js 18+ / npm
-- Rust toolchain (stable)
-- `cargo`
-- `npm install`
-- `@tauri-apps/cli`
-- `tauri` Windows prerequisites:
-  - Visual Studio Build Tools with MSVC and Windows SDK
-  - `dotnet` runtime if required by current Tauri toolchain
-  - `python` if needed by Rust toolchain/build scripts
-
-Run the build from the repo root in Windows:
-
-```bat
 build-windows.bat
-```
 
-If the build succeeds, the MSI installer is created under:
+Package Outputs
 
-- `src-tauri\target\release\bundle\msi\`
+Successfully compiled installers and binaries are deposited into the following directories:
 
-If no installer appears, review the batch output for the failing step.
+    DEB: src-tauri/target/release/bundle/deb/
 
-## Package outputs
+    RPM: src-tauri/target/release/bundle/rpm/
 
-Built packages are placed in:
+    AppImage: src-tauri/target/release/bundle/appimage/
 
-- `src-tauri/target/release/bundle/deb/`
-- `src-tauri/target/release/bundle/rpm/`
-- `src-tauri/target/release/bundle/appimage/`
-- `build-flatpak/`
-- `packaging/arch/`
+    Arch/Pacman: packaging/arch/
 
-## Notes
+    Flatpak: build-flatpak/
 
-- The Arch package source is stored in `packaging/arch/`.
-- Existing package artifacts are preserved during cleanup.
-- If AppImage packaging fails via Tauri, the fallback script uses `appimagetool` on the generated AppDir.
+    Windows MSI: src-tauri\target\release\bundle\msi\
