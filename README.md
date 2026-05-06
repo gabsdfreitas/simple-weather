@@ -16,7 +16,7 @@ Features
 <img width="1508" height="930" alt="image" src="https://github.com/user-attachments/assets/35af1c6b-098e-403a-9cfc-86f5c45d1923" />
 
 
-##Prerequisites
+## Prerequisites
 
 Ensure the following system dependencies are installed before building:
 
